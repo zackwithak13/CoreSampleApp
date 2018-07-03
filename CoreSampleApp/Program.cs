@@ -27,30 +27,30 @@ namespace CoreSampleApp
             SimpleInjectorAccessor.RegisterContainer(container);
             SimpleInjectorAccessor.Load(CoreSampleAppInjectorModule.LoadTypes);
 
-            List<FileData> fileDatas = new List<FileData>();
-            var csv = File.ReadAllText("sample.csv");
-            var options = new CsvOptions()
-            {
-                HeaderMode = HeaderMode.HeaderAbsent,
-                ValidateColumnCount = false,
-            };
-            int row = 1;
+            //List<FileData> fileDatas = new List<FileData>();
+            //var csv = File.ReadAllText("sample.csv");
+            //var options = new CsvOptions()
+            //{
+            //    HeaderMode = HeaderMode.HeaderAbsent,
+            //    ValidateColumnCount = false,
+            //};
+            //int row = 1;
 
-            foreach (var line in CsvReader.ReadFromText(csv))
-            {
-                // Code to build an entry or perform other actions goes here
-                for (int col = 0; col < line.ColumnCount; col++)
-                {
-                    fileDatas.Add(new FileData()
-                    {
-                        FileId = 0,
-                        RowNum = row,
-                        ColNum = col,
-                        Value = line[col]
-                    });
-                }
-                row++;
-            }
+            //foreach (var line in CsvReader.ReadFromText(csv, options))
+            //{
+            //    // Code to build an entry or perform other actions goes here
+            //    for (int col = 0; col < line.ColumnCount; col++)
+            //    {
+            //        fileDatas.Add(new FileData()
+            //        {
+            //            FileId = 0,
+            //            RowNum = row,
+            //            ColNum = col,
+            //            Value = line[col]
+            //        });
+            //    }
+            //    row++;
+            //}
             //Bulk insert data from the list
 
             var productService = SimpleInjectorAccessor.Container.GetInstance<IProductService>();

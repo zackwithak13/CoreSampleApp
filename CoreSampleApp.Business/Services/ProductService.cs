@@ -23,5 +23,13 @@ namespace CoreSampleApp.Business.Services
 
             AdventureWorksContext.BulkInsert(productEntities);
         }
+
+        public Core.Models.Product InsertProduct(Core.Models.Product product)
+        {
+            var addProduct = Factory.CreateProductEntity(product);
+            AdventureWorksContext.Add(addProduct);
+            AdventureWorksContext.SaveChanges();
+            return Factory.CreateProductDTO(addProduct);
+        }
     }
 }

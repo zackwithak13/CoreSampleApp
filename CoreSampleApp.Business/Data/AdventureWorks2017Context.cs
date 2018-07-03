@@ -9,16 +9,17 @@ namespace CoreSampleApp.Business.Data
 {
     public partial class AdventureWorks2017Context : DbContext
     {
-        private readonly string _connnectionString;
+        private readonly string _connectionString;
 
         public AdventureWorks2017Context()
         {
-            _connnectionString = SimpleInjectorAccessor.Container.GetInstance<IConfiguration>().GetConnectionString("AdventureWorks2017");
+            var config = SimpleInjectorAccessor.Container.GetInstance<IConfiguration>();
+            _connectionString = config.GetConnectionString("AdventureWorks2017");
         }
 
         public AdventureWorks2017Context(string connectionString)
         {
-            _connnectionString = connectionString;
+            _connectionString = connectionString;
         }
 
         public AdventureWorks2017Context(DbContextOptions<AdventureWorks2017Context> options)
@@ -103,7 +104,7 @@ namespace CoreSampleApp.Business.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(_connnectionString);
+                optionsBuilder.UseSqlServer(_connectionString);
             }
         }
 
