@@ -6,7 +6,7 @@ namespace CoreSampleApp.Business.Factories
 {
     public static partial class Factory
     {
-        public static Core.Models.Product CreateProductDTO(Data.Product input)
+        public static Core.Models.Product CreateProductDTO(Data.AdventureWorks2017.Product input)
         {
             return input == null ? null : new Core.Models.Product()
             {
@@ -38,9 +38,9 @@ namespace CoreSampleApp.Business.Factories
             };
         }
 
-        public static Data.Product CreateProductEntity(Core.Models.Product input)
+        public static Data.AdventureWorks2017.Product CreateProductEntity(Core.Models.Product input)
         {
-            return input == null ? null : new Data.Product()
+            return input == null ? null : new Data.AdventureWorks2017.Product()
             {
                 ProductId = input.ProductID,
                 Name = input.Name,

@@ -1,4 +1,4 @@
-﻿using CoreSampleApp.Business.Data;
+﻿using CoreSampleApp.Business.Data.AdventureWorks2017;
 using CoreSampleApp.Utilities.SimpleInjector;
 using System;
 using System.Collections.Generic;

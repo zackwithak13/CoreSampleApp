@@ -12,7 +12,7 @@ namespace CoreSampleApp.Business.Services
     {
         public Core.Models.Product GetProductById(int id)
         {
-            var result = AdventureWorksContext.Find<Data.Product>(id);
+            var result = AdventureWorksContext.Find<Data.AdventureWorks2017.Product>(id);
 
             return Factory.CreateProductDTO(result);
         }

@@ -1,4 +1,4 @@
-﻿using CoreSampleApp.Business.Data;
+﻿using CoreSampleApp.Business.Data.AdventureWorks2017;
 using CoreSampleApp.Business.Interfaces;
 using CoreSampleApp.Business.Services;
 using SimpleInjector;
