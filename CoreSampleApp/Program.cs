@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.IO;
 using CoreSampleApp.Business.Utilities;
 using CoreSampleApp.Business.Utilities.Logging;
+using CoreSampleApp.Utilities.StringResources;
+using System.Resources;
 
 namespace CoreSampleApp
 {
@@ -55,9 +57,9 @@ namespace CoreSampleApp
             //}
             //Bulk insert data from the list
 
-            SimpleInjectorAccessor.Container.Register<ILogger>(() => new ProcessorLogger("FilePath"));
+            SimpleInjectorAccessor.Container.Register<ILogger>(() => new FileLogger("FilePath"));
 
-            Logger.Log(Core.ENUMS.LOGGINGMESSAGETYPES.Trace, "This is a logging message");
+            Logger.Log(Core.ENUMS.LOGGINGMESSAGETYPES.Trace, LoggingMessages.ResourceManager.GetString("String1"));
             var productService = SimpleInjectorAccessor.Container.GetInstance<IProductService>();
             int id;
             string entry;

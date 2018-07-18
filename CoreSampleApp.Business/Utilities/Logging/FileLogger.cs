@@ -7,10 +7,10 @@ using Microsoft.Extensions.Configuration;
 
 namespace CoreSampleApp.Business.Utilities.Logging
 {
-    public class ProcessorLogger : ILogger
+    public class FileLogger : ILogger
     {
         private string _logFilePath;
-        public ProcessorLogger(string logFilePath)
+        public FileLogger(string logFilePath)
         {
             _logFilePath = logFilePath;
             if (!File.Exists(_logFilePath))
