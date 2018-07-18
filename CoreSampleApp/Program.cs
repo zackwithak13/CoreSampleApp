@@ -57,7 +57,10 @@ namespace CoreSampleApp
             //}
             //Bulk insert data from the list
 
-            SimpleInjectorAccessor.Container.Register<ILogger>(() => new FileLogger("FilePath"));
+            var fileLogger = new FileLogger("FilePath");
+            SimpleInjectorAccessor.Container.RegisterInstance<ILogger>(fileLogger);
+
+            fileLogger.LogFilePath = "NewFilePath";
 
             Logger.Log(Core.ENUMS.LOGGINGMESSAGETYPES.Trace, LoggingMessages.ResourceManager.GetString("String1"));
             var productService = SimpleInjectorAccessor.Container.GetInstance<IProductService>();

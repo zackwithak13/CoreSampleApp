@@ -11,13 +11,20 @@ namespace CoreSampleApp.Business.Utilities.Logging
     public class FileLogger : ILogger
     {
         private string _logFilePath;
+        public string LogFilePath
+        {
+            set
+            {
+                _logFilePath = value;
+                if (!File.Exists(_logFilePath))
+                {
+                    File.Create(_logFilePath).Dispose();
+                }
+            }
+        }
         public FileLogger(string logFilePath)
         {
-            _logFilePath = logFilePath;
-            if (!File.Exists(_logFilePath))
-            {
-                File.Create(_logFilePath).Dispose();
-            }
+            LogFilePath = logFilePath;            
         }
 
         public void Dispose()
