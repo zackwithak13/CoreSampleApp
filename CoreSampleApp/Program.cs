@@ -7,6 +7,8 @@ using SimpleInjector.Lifestyles;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using CoreSampleApp.Business.Utilities;
+using CoreSampleApp.Business.Utilities.Logging;
 
 namespace CoreSampleApp
 {
@@ -53,6 +55,9 @@ namespace CoreSampleApp
             //}
             //Bulk insert data from the list
 
+            SimpleInjectorAccessor.Container.Register<ILogger>(() => new ProcessorLogger("FilePath"));
+
+            Logger.Log(Core.ENUMS.LOGGINGMESSAGETYPES.Trace, "This is a logging message");
             var productService = SimpleInjectorAccessor.Container.GetInstance<IProductService>();
             int id;
             string entry;

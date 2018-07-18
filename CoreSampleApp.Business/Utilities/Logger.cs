@@ -24,6 +24,14 @@ namespace CoreSampleApp.Business.Utilities
             }
         }
 
+        public static void LogTrace(string message)
+        {
+            using (ILogger logger = Logger.Get())
+            {
+                logger.LogEntry(LOGGINGMESSAGETYPES.Trace, message);
+            }
+        }
+
         /// <summary>
         /// helper to access a logger
         /// </summary>
