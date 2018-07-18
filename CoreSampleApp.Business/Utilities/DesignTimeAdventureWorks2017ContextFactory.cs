@@ -1,14 +1,10 @@
 ﻿using CoreSampleApp.Business.Data.AdventureWorks2017;
 using CoreSampleApp.Utilities.SimpleInjector;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace CoreSampleApp.Business.Utilities
 {

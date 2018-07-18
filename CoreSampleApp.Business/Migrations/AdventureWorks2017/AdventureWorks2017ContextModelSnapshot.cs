@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CoreSampleApp.Business.Migrations
+namespace CoreSampleApp.Business.Migrations.AdventureWorks2017
 {
     [DbContext(typeof(AdventureWorks2017Context))]
     partial class AdventureWorks2017ContextModelSnapshot : ModelSnapshot

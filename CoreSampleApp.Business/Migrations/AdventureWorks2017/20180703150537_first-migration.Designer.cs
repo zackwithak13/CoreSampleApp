@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace CoreSampleApp.Business.Migrations
+namespace CoreSampleApp.Business.Migrations.AdventureWorks2017
 {
     [DbContext(typeof(AdventureWorks2017Context))]
     [Migration("20180703150537_first-migration")]

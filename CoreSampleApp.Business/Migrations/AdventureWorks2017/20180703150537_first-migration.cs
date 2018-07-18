@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace CoreSampleApp.Business.Migrations
+namespace CoreSampleApp.Business.Migrations.AdventureWorks2017
 {
     public partial class firstmigration : Migration
     {
