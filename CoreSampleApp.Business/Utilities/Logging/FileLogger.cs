@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using CoreSampleApp.Core.ENUMS;
+using CoreSampleApp.Utilities.Extensions;
 using Microsoft.Extensions.Configuration;
 
 namespace CoreSampleApp.Business.Utilities.Logging
@@ -15,7 +16,7 @@ namespace CoreSampleApp.Business.Utilities.Logging
             _logFilePath = logFilePath;
             if (!File.Exists(_logFilePath))
             {
-                File.CreateText(_logFilePath);
+                File.Create(_logFilePath).Dispose();
             }
         }
 
@@ -36,7 +37,7 @@ namespace CoreSampleApp.Business.Utilities.Logging
         {
             using (StreamWriter sw = File.AppendText(_logFilePath))
             {
-
+                sw.WriteLine($"{messagetype.GetDescription()}:\t{message}");
             }
         }
     }
