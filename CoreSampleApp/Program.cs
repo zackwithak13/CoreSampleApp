@@ -37,6 +37,7 @@ namespace CoreSampleApp
             //{
             //    HeaderMode = HeaderMode.HeaderAbsent,
             //    ValidateColumnCount = false,
+            //    TrimData = true,
             //};
             //int row = 1;
 
@@ -55,7 +56,7 @@ namespace CoreSampleApp
             //    }
             //    row++;
             //}
-            //Bulk insert data from the list
+            ////Bulk insert data from the list
 
             var fileLogger = new FileLogger("FilePath");
             SimpleInjectorAccessor.Container.RegisterInstance<ILogger>(fileLogger);
