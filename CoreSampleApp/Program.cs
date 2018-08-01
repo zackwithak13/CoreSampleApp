@@ -14,7 +14,7 @@ using System.Resources;
 
 namespace CoreSampleApp
 {
-    class Program
+    static class Program
     {
         class FileData
         {
@@ -23,72 +23,53 @@ namespace CoreSampleApp
             public int ColNum { get; set; }
             public string Value { get; set; }
         }
-        static void Main(string[] args)
+
+        static Program()
         {
             var container = new Container();
             container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
 
             SimpleInjectorAccessor.RegisterContainer(container);
             SimpleInjectorAccessor.Load(CoreSampleAppInjectorModule.LoadTypes);
+        }
 
-            //List<FileData> fileDatas = new List<FileData>();
-            //var csv = File.ReadAllText("sample.csv");
-            //var options = new CsvOptions()
-            //{
-            //    HeaderMode = HeaderMode.HeaderAbsent,
-            //    ValidateColumnCount = false,
-            //    TrimData = true,
-            //};
-            //int row = 1;
-
-            //foreach (var line in CsvReader.ReadFromText(csv, options))
-            //{
-            //    // Code to build an entry or perform other actions goes here
-            //    for (int col = 0; col < line.ColumnCount; col++)
-            //    {
-            //        fileDatas.Add(new FileData()
-            //        {
-            //            FileId = 0,
-            //            RowNum = row,
-            //            ColNum = col,
-            //            Value = line[col]
-            //        });
-            //    }
-            //    row++;
-            //}
-            ////Bulk insert data from the list
+        static void Main(string[] args)
+        {
 
             var fileLogger = new FileLogger("FilePath");
             SimpleInjectorAccessor.Container.RegisterInstance<ILogger>(fileLogger);
 
-            fileLogger.LogFilePath = "NewFilePath";
-
-            Logger.Log(Core.ENUMS.LOGGINGMESSAGETYPES.Trace, LoggingMessages.ResourceManager.GetString("String1"));
-            var productService = SimpleInjectorAccessor.Container.GetInstance<IProductService>();
-            int id;
-            string entry;
-            do
+            using (AsyncScopedLifestyle.BeginScope(SimpleInjectorAccessor.Container))
             {
-                Console.Write("Enter Product Id:  ");
-                entry = Console.ReadLine();
-                if (int.TryParse(entry, out id))
-                {
-                    var product = productService.GetProductById(id);
+                fileLogger.LogFilePath = "NewFilePath";
 
-                    if (product != null)
+                Logger.Log(Core.ENUMS.LOGGINGMESSAGETYPES.Trace, LoggingMessages.ResourceManager.GetString("String1"));
+                var productService = SimpleInjectorAccessor.Container.GetInstance<IProductService>();
+                int id;
+                string entry;
+                do
+                {
+                    Console.Write("Enter Product Id:  ");
+                    entry = Console.ReadLine();
+                    if (int.TryParse(entry, out id))
                     {
-                        Console.WriteLine($"Name: {product.Name}\nPrice: {product.ListPrice}");
+                        var product = productService.GetProductById(id);
+
+                        if (product != null)
+                        {
+                            Console.WriteLine($"Name: {product.Name}\nPrice: {product.ListPrice}");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Product Not Found");
+                        }
                     }
                     else
                     {
-                        Console.WriteLine("Product Not Found");
+                        Console.WriteLine("Failed");
                     }
-                }
-                else
-                {
-                    Console.WriteLine("Failed");
-                }
-            } while (entry != "quit");
+                } while (entry != "quit");
+            }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace CoreSampleApp.Business.SimpleInjector
     {
         public static void LoadTypes(Container container)
         {
-            container.Register<AdventureWorks2017Context>(() => new AdventureWorks2017Context());
+            container.Register<AdventureWorks2017Context>(() => new AdventureWorks2017Context(), Lifestyle.Scoped);
 
             container.Register<IProductService, ProductService>();
         }
