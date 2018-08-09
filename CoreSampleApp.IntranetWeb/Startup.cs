@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreSampleApp.SimpleInjector;
+using CoreSampleApp.Utilities.SimpleInjector;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -87,11 +88,15 @@ namespace CoreSampleApp.IntranetWeb
 
         private void InitializeContainer(IApplicationBuilder app)
         {
+            SimpleInjectorAccessor.RegisterContainer(container);
             // Add application presentation components:
             container.RegisterMvcControllers(app);
             container.RegisterMvcViewComponents(app);
 
             container.Register<IConfiguration>(() => Configuration);
+            IConfiguration test = SimpleInjectorAccessor.Container.GetInstance<IConfiguration>();
+
+            test.GetValue<string>("test");
             // Add application services.
             CoreSampleAppIntranetWebInjectorModule.LoadTypes(container);
 
