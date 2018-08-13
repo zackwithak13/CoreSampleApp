@@ -1,4 +1,4 @@
-﻿using Csv;
+﻿//using Csv;
 using CoreSampleApp.Business.Interfaces;
 using CoreSampleApp.SimpleInjector;
 using CoreSampleApp.Utilities.SimpleInjector;
@@ -11,6 +11,7 @@ using CoreSampleApp.Business.Utilities;
 using CoreSampleApp.Business.Utilities.Logging;
 using CoreSampleApp.Utilities.StringResources;
 using System.Resources;
+using CsvHelper;
 
 namespace CoreSampleApp
 {
@@ -38,6 +39,47 @@ namespace CoreSampleApp
 
             var fileLogger = new FileLogger("FilePath");
             SimpleInjectorAccessor.Container.RegisterInstance<ILogger>(fileLogger);
+
+            var options = new CsvHelper.Configuration.Configuration()
+            {
+                HasHeaderRecord = false,
+                TrimOptions = CsvHelper.Configuration.TrimOptions.Trim,                
+            };
+            List<FileData> fileDatas = new List<FileData>();
+            using (var reader = new StreamReader("sample.csv"))
+            {
+                using (var csv = new CsvReader(reader, options))
+                {
+                    var lines = csv.GetRecords<dynamic>();                    
+                    foreach (var line in lines)
+                    {
+                        //do stuff
+                    }                    
+                }
+            }
+            //var options = new CsvOptions()
+            //{
+            //    HeaderMode = HeaderMode.HeaderAbsent,
+            //    ValidateColumnCount = false,
+            //    TrimData = true,
+            //};
+            //int row = 1;
+
+            //foreach (var line in CsvReader.ReadFromText(csv, options))
+            //{
+            //    // Code to build an entry or perform other actions goes here
+            //    for (int col = 0; col < line.ColumnCount; col++)
+            //    {
+            //        fileDatas.Add(new FileData()
+            //        {
+            //            FileId = 0,
+            //            RowNum = row,
+            //            ColNum = col,
+            //            Value = line[col]
+            //        });
+            //    }
+            //    row++;
+            //}
 
             using (AsyncScopedLifestyle.BeginScope(SimpleInjectorAccessor.Container))
             {
