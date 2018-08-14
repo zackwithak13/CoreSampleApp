@@ -63,7 +63,7 @@ namespace CoreSampleApp.IntranetWeb
             //app.UseMiddleware<CustomMiddleware1>(container);
             //app.UseMiddleware<CustomMiddleware2>(container);
 
-            container.Verify();
+            //container.Verify();
 
             // ASP.NET default stuff here
             if (env.IsDevelopment())
@@ -94,9 +94,7 @@ namespace CoreSampleApp.IntranetWeb
             container.RegisterMvcViewComponents(app);
 
             container.Register<IConfiguration>(() => Configuration);
-            IConfiguration test = SimpleInjectorAccessor.Container.GetInstance<IConfiguration>();
 
-            test.GetValue<string>("test");
             // Add application services.
             CoreSampleAppIntranetWebInjectorModule.LoadTypes(container);
 

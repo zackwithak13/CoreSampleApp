@@ -1,5 +1,4 @@
-﻿//using Csv;
-using CoreSampleApp.Business.Interfaces;
+﻿using CoreSampleApp.Business.Interfaces;
 using CoreSampleApp.SimpleInjector;
 using CoreSampleApp.Utilities.SimpleInjector;
 using SimpleInjector;
@@ -10,7 +9,6 @@ using System.IO;
 using CoreSampleApp.Business.Utilities;
 using CoreSampleApp.Business.Utilities.Logging;
 using CoreSampleApp.Utilities.StringResources;
-using System.Resources;
 using CsvHelper;
 
 namespace CoreSampleApp
@@ -23,63 +21,47 @@ namespace CoreSampleApp
             public int RowNum { get; set; }
             public int ColNum { get; set; }
             public string Value { get; set; }
-        }
+        }       
 
         static Program()
         {
-            var container = new Container();
-            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();
+            var container = new Container();            
+            container.Options.DefaultScopedLifestyle = new AsyncScopedLifestyle();            
 
             SimpleInjectorAccessor.RegisterContainer(container);
             SimpleInjectorAccessor.Load(CoreSampleAppInjectorModule.LoadTypes);
         }
 
         static void Main(string[] args)
-        {
-
+        {           
             var fileLogger = new FileLogger("FilePath");
             SimpleInjectorAccessor.Container.RegisterInstance<ILogger>(fileLogger);
 
             var options = new CsvHelper.Configuration.Configuration()
             {
                 HasHeaderRecord = false,
-                TrimOptions = CsvHelper.Configuration.TrimOptions.Trim,                
+                TrimOptions = CsvHelper.Configuration.TrimOptions.Trim,
+                BadDataFound = null,
             };
             List<FileData> fileDatas = new List<FileData>();
-            using (var reader = new StreamReader("sample.csv"))
+            using (var reader = new StreamReader("C:\\csvTest.txt"))
             {
-                using (var csv = new CsvReader(reader, options))
+                using (var csvParser = new CsvParser(reader, options))
                 {
-                    var lines = csv.GetRecords<dynamic>();                    
-                    foreach (var line in lines)
+                    string[] line;
+                    var row = 0;
+                    while ((line = csvParser.Read()) != null)
                     {
-                        //do stuff
-                    }                    
+                        for (int col = 0; col < line.Length; col++)
+                        {
+                            if (row == 12 && col == 1)
+                            { string dfa = string.Empty; }
+                            var test = line[col];
+                        }
+                        row++;
+                    }
                 }
             }
-            //var options = new CsvOptions()
-            //{
-            //    HeaderMode = HeaderMode.HeaderAbsent,
-            //    ValidateColumnCount = false,
-            //    TrimData = true,
-            //};
-            //int row = 1;
-
-            //foreach (var line in CsvReader.ReadFromText(csv, options))
-            //{
-            //    // Code to build an entry or perform other actions goes here
-            //    for (int col = 0; col < line.ColumnCount; col++)
-            //    {
-            //        fileDatas.Add(new FileData()
-            //        {
-            //            FileId = 0,
-            //            RowNum = row,
-            //            ColNum = col,
-            //            Value = line[col]
-            //        });
-            //    }
-            //    row++;
-            //}
 
             using (AsyncScopedLifestyle.BeginScope(SimpleInjectorAccessor.Container))
             {
@@ -87,6 +69,7 @@ namespace CoreSampleApp
 
                 Logger.Log(Core.ENUMS.LOGGINGMESSAGETYPES.Trace, LoggingMessages.ResourceManager.GetString("String1"));
                 var productService = SimpleInjectorAccessor.Container.GetInstance<IProductService>();
+                var test = productService.GetCurrentUserName();
                 int id;
                 string entry;
                 do

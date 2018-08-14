@@ -5,13 +5,20 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CoreSampleApp.IntranetWeb.Models;
+using CoreSampleApp.Business.Interfaces;
 
 namespace CoreSampleApp.IntranetWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IProductService _productService;
+        public HomeController(IProductService productService)
+        {
+            _productService = productService;
+        }
         public IActionResult Index()
         {
+            var product = _productService.GetCurrentUserName();
             return View();
         }
 

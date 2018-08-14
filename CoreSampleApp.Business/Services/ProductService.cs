@@ -1,6 +1,7 @@
 ﻿using CoreSampleApp.Business.Factories;
 using CoreSampleApp.Business.Interfaces;
 using EFCore.BulkExtensions;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,12 @@ namespace CoreSampleApp.Business.Services
             var result = AdventureWorksContext.Find<Data.AdventureWorks2017.Product>(id);
 
             return Factory.CreateProductDTO(result);
+        }
+
+        public string GetCurrentUserName()
+        {
+            var result = AdventureWorksContext.UserName.FromSql("SELECT SESSION_CONTEXT(N'CurrentApplicationUser') AS UserName").FirstOrDefault();
+            return result.UserName;
         }
 
         public void InsertProducts(List<Core.Models.Product> products)

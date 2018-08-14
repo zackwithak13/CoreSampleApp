@@ -4,12 +4,17 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.IO;
 using CoreSampleApp.Utilities.SimpleInjector;
+using System.Data.SqlClient;
+using System.Data;
+using System.Security.Principal;
+using System.ComponentModel.DataAnnotations;
 
 namespace CoreSampleApp.Business.Data.AdventureWorks2017
 {
     public partial class AdventureWorks2017Context : DbContext
     {
         private readonly string _connectionString;
+        private SqlConnection connection;
 
         public AdventureWorks2017Context()
         {
@@ -96,6 +101,13 @@ namespace CoreSampleApp.Business.Data.AdventureWorks2017
         public virtual DbSet<Vendor> Vendor { get; set; }
         public virtual DbSet<WorkOrder> WorkOrder { get; set; }
         public virtual DbSet<WorkOrderRouting> WorkOrderRouting { get; set; }
+        public virtual DbSet<UserNameClass> UserName { get; set; }
+
+        public class UserNameClass
+        {
+            [Key]
+            public string UserName { get; set; }
+        }
 
         // Unable to generate entity type for table 'Production.ProductDocument'. Please see the warning messages.
         // Unable to generate entity type for table 'Production.Document'. Please see the warning messages.
@@ -104,7 +116,21 @@ namespace CoreSampleApp.Business.Data.AdventureWorks2017
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(_connectionString);
+                connection = new SqlConnection(_connectionString);
+                connection.StateChange += Connection_StateChange;
+                optionsBuilder.UseSqlServer(connection);
+            }
+        }
+
+        private void Connection_StateChange(object sender, System.Data.StateChangeEventArgs e)
+        {
+            if (e.CurrentState == ConnectionState.Open)
+            {
+                var cmd = connection.CreateCommand();
+                cmd.CommandText = @"exec sp_set_session_context @key=N'CurrentApplicationUser', @value=@CurrentApplicationUser";
+                var user = SimpleInjectorAccessor.Container.GetInstance<IIdentity>();
+                cmd.Parameters.AddWithValue("@CurrentApplicationUser", user.Name);
+                cmd.ExecuteNonQuery();
             }
         }
 

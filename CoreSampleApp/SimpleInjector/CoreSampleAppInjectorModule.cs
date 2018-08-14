@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Security.Principal;
+using System.Threading;
 
 namespace CoreSampleApp.SimpleInjector
 {
@@ -18,6 +20,9 @@ namespace CoreSampleApp.SimpleInjector
                 .AddJsonFile("appsettings.json")
                 .Build();
             container.Register<IConfiguration>(() => configuration);
+
+            var identity = new GenericIdentity("Processor");
+            container.Register<IIdentity>(() => identity);
 
             SimpleInjectorAccessor.Load(CoreSampleAppBusinessInjectorModule.LoadTypes);
         }

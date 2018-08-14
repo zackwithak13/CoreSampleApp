@@ -7,5 +7,6 @@ namespace CoreSampleApp.Business.Interfaces
     public interface IProductService
     {
         Core.Models.Product GetProductById(int id);
+        string GetCurrentUserName();
     }
 }

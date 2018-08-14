@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Security.Principal;
+using Microsoft.AspNetCore.Http;
 
 namespace CoreSampleApp.SimpleInjector
 {
@@ -13,6 +15,7 @@ namespace CoreSampleApp.SimpleInjector
     {
         public static void LoadTypes(Container container)
         {
+            container.Register<IIdentity>(() => SimpleInjectorAccessor.Container.GetInstance<IHttpContextAccessor>().HttpContext.User.Identity, Lifestyle.Transient);
             SimpleInjectorAccessor.Load(CoreSampleAppBusinessInjectorModule.LoadTypes);
         }
     }
