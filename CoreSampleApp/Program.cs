@@ -40,10 +40,10 @@ namespace CoreSampleApp
             var options = new CsvHelper.Configuration.Configuration()
             {
                 HasHeaderRecord = false,
-                TrimOptions = CsvHelper.Configuration.TrimOptions.Trim,
+                TrimOptions = CsvHelper.Configuration.TrimOptions.Trim | CsvHelper.Configuration.TrimOptions.InsideQuotes,
                 BadDataFound = null,
             };
-            List<FileData> fileDatas = new List<FileData>();
+            options.TypeConverterOptionsCache.GetOptions<string>().NullValues.Add(string.Empty);
             using (var reader = new StreamReader("C:\\csvTest.txt"))
             {
                 using (var csvParser = new CsvParser(reader, options))
@@ -54,6 +54,7 @@ namespace CoreSampleApp
                     {
                         for (int col = 0; col < line.Length; col++)
                         {
+                            if (line[col] == string.Empty) { line[col] = null; }
                             if (row == 12 && col == 1)
                             { string dfa = string.Empty; }
                             var test = line[col];

@@ -4,14 +4,16 @@ using CoreSampleApp.Business.Data.AdventureWorks2017;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CoreSampleApp.Business.Migrations.AdventureWorks2017
 {
     [DbContext(typeof(AdventureWorks2017Context))]
-    partial class AdventureWorks2017ContextModelSnapshot : ModelSnapshot
+    [Migration("20180815161512_checknew")]
+    partial class checknew
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

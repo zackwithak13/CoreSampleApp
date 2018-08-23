@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using SimpleInjector;
 using SimpleInjector.Lifestyles;
 using System.IO;
+using System.Security.Principal;
 
 namespace CoreSampleApp.Business.Utilities
 {
@@ -24,6 +25,9 @@ namespace CoreSampleApp.Business.Utilities
 
 
             container.Register<IConfiguration>(() => configuration);
+
+            var identity = new GenericIdentity("Migration");
+            container.Register<IIdentity>(() => identity);
 
             return new AdventureWorks2017Context();
         }
