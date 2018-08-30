@@ -18,6 +18,9 @@ namespace CoreSampleApp.SimpleInjector
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json")
+#if DEBUG
+                .AddJsonFile("appsettings.Development.json")
+#endif
                 .Build();
             container.Register<IConfiguration>(() => configuration);
 

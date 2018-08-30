@@ -14,6 +14,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SimpleInjector;
 using SimpleInjector.Integration.AspNetCore.Mvc;
 using SimpleInjector.Lifestyles;
+using Microsoft.AspNetCore.Server.IISIntegration;
 
 namespace CoreSampleApp.IntranetWeb
 {
@@ -32,6 +33,7 @@ namespace CoreSampleApp.IntranetWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddAuthentication(IISDefaults.AuthenticationScheme);
 
             IntegrateSimpleInjector(services);
         }

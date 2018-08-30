@@ -10,8 +10,19 @@ using Microsoft.Extensions.Logging;
 
 namespace CoreSampleApp.IntranetWeb
 {
-    public class Program
+    public static class Program
     {
+        private static readonly string environmentName;
+
+        static Program()
+        {
+#if DEBUG
+            environmentName = "Development";
+#elif RELEASE
+            environmentName = "Production";
+#endif
+        }
+
         public static void Main(string[] args)
         {
             BuildWebHost(args).Run();
@@ -19,6 +30,7 @@ namespace CoreSampleApp.IntranetWeb
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                .UseEnvironment(environmentName)
                 .UseStartup<Startup>()
                 .Build();
     }
